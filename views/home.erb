@@ -1,0 +1,13 @@
+<p>
+Welcome to the home page of my very first Sinatra app.
+</p>
+Enter your Last.fm username, select a time period and press generate:
+<form action="/" method ="post" accept-charset="utf-8">
+<input type="text" id="username" name="username" value=""><br>
+<input type="radio" name="period" value="7day">Past week<br>
+<input type="radio" name="period" value="3month" checked>Past 3 months<br>
+<input type="radio" name="period" value="6month" checked>Past 6 months<br>
+<input type="radio" name="period" value="12month" checked>Past year<br>
+<input type="radio" name="period" value="overall">All time<br>
+<input type="submit" value="Generate!">
+</form>

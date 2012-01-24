@@ -1,0 +1,102 @@
+#musicbox{
+    
+    position:relative;
+    width:200px;
+}
+
+#titlebox{
+    opacity:0;
+    -webkit-transition: opacity 0.4s linear;
+    -moz-transition: opacity 0.4s linear;
+    height: 100px;
+
+}
+
+p.title{text-align: center }
+	
+a.title{
+    font-family:Helvetica;
+    font-size:15px;
+    text-align:center;
+    margin:10px;
+    color:black
+}
+
+a.title:link {text-decoration: none}
+a.title:visited {text-decoration: none}
+a.title:active {text-decoration: none}
+a.title:hover {text-decoration: underline}
+
+a#artistname{
+	margin-bottom:3px}
+a#albumname{
+	margin-top:0;
+    padding-bottom:10px;
+    font-weight:bold;
+    }
+
+#wrapper{
+    margin:0 auto;
+    height:400px;
+    
+    width:160px;
+}
+
+.albumholder{
+    
+    position:absolute;
+    margin:0 auto;
+    bottom:10px;
+    width:160px;
+    height: 160px;
+    
+    -webkit-perspective:800px;
+       -moz-perspective:800px;
+            perspective:800px;
+    -webkit-transform-style: preserve-3d;
+       -moz-transform-style: preserve-3d;
+           -transform-style: preserve-3d;
+}
+
+.album{
+    position:absolute;
+    width: 100%;
+    height:100%;
+    -webkit-transition: -webkit-transform 0.4s;
+    -webkit-transform-origin: bottom;
+    -webkit-transform: rotateX(2deg);
+    -moz-transition: -moz-transform 0.4s;
+    -moz-transform-origin: bottom;
+    -moz-transform: rotateX(2deg);
+}
+
+
+.album .shadow{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color: black;
+    opacity:0;
+    -webkit-transition: opacity 0.4s linear;
+    -moz-transition: opacity 0.4s linear;
+}
+
+.album  img{height:100%;
+    width: 100%;
+    bottom:0;
+    /*border:1px solid #000000*/}
+
+div    .box {    position:absolute;
+    margin-left:auto;
+    margin-right:auto;
+    width:100%;    
+}
+#back{z-index:0;bottom:0px}
+#front{z-index:2;opacity:1;bottom:0px}
+
+.box img{position:absolute;
+    bottom:0;
+    width:100%}
+

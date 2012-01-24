@@ -1,0 +1,76 @@
+numAlbums = 6;
+yoffset = 20;
+zoffset = 30;
+fangle = -60;
+bangle = 2;
+currentAlbum = 0;
+
+artistNames = ["<%= @albums[:artist_names].join("\",\"") %>"]
+albumNames = ["<%= @albums[:album_names].join("\",\"") %>"]
+
+function displayAlbum(album) {
+    for (a = album; a <= numAlbums; a++) {
+        if (a == currentAlbum) {
+            continue;
+        }
+        document.getElementById("album" + a).style.webkitTransform = "rotateX(" + bangle + "deg) translateY(-" + (a - 1) * yoffset + "px) translateZ(-" + (a - 1) * zoffset + "px)";
+        document.getElementById("album" + a).style.MozTransform = "rotateX(" + bangle + "deg) translateY(-" + (a - 1) * yoffset + "px) translateZ(-" + (a - 1) * zoffset + "px)";
+        document.getElementById("shadow" + a).style.opacity = "0";
+    }
+    for (a = 1; a < album; a++) {
+        if (a == currentAlbum) {
+            continue;
+        }
+        document.getElementById("album" + a).style.webkitTransform = "rotateX(" + fangle + "deg) translateY(" + (a - 1) * yoffset + "px) translateZ(-" + (a - 1) * zoffset + "px)";
+        document.getElementById("album" + a).style.MozTransform = "rotateX(" + fangle + "deg) translateY(" + (a - 1) * yoffset + "px) translateZ(-" + (a - 1) * zoffset + "px)";
+        document.getElementById("shadow" + a).style.opacity = "0.3";
+    }
+}
+
+function albumMouseover() {
+    var album = String(this.id).replace("shadow", "");
+    if (album != currentAlbum) {
+        displayAlbum(album);
+        document.getElementById("album" + album).style.webkitTransform = "rotateX(" + bangle + "deg) translateY(-" + ((a - 1) * yoffset + 5) + "px) translateZ(-" + (a - 1) * zoffset + "px)";
+        document.getElementById("album" + album).style.MozTransform = "rotateX(" + bangle + "deg) translateY(-" + ((a - 1) * yoffset + 5) + "px) translateZ(-" + (a - 1) * zoffset + "px)";
+    }
+}
+
+function albumMouseout() {
+    var album = String(this.id).replace("shadow", "");
+    if (album != currentAlbum) {
+        displayAlbum(album);
+    }
+}
+
+
+function albumClick() {
+    var album = String(this.id).replace("shadow", "");
+    if (album == currentAlbum) {
+        currentAlbum = 0;
+        document.getElementById("titlebox").style.opacity = "0";
+        displayAlbum(album);
+    }
+    else {
+        currentAlbum = album;
+        document.getElementById("album" + album).style.webkitTransform = "rotateX(0deg) translateY(-240px) translateZ(0)";
+        document.getElementById("album" + album).style.MozTransform = "rotateX(0deg) translateY(-240px) translateZ(0)";
+        document.getElementById("artistname").innerHTML = artistNames[currentAlbum - 1];
+        document.getElementById("albumname").innerHTML = albumNames[currentAlbum - 1];
+        document.getElementById("titlebox").style.opacity = "1";
+        displayAlbum(album);
+    }
+}
+
+
+for (a = 1; a <= numAlbums; a++) {
+    document.getElementById("album" + a).style.webkitTransformOriginX = "50%";
+    document.getElementById("album" + a).style.webkitTransformOriginY = "-" + (a - 1) * yoffset + "px)";
+    document.getElementById("album" + a).style.MozTransformOriginX = "50%";
+    document.getElementById("album" + a).style.MozTransformOriginY = "-" + (a - 1) * yoffset + "px)";
+    document.getElementById("shadow" + a).onmouseover = albumMouseover;
+    document.getElementById("shadow" + a).onclick = albumClick;
+    document.getElementById("shadow" + a).onmouseout = albumMouseout;
+}
+
+displayAlbum(1);
