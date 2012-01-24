@@ -17,9 +17,6 @@ post '/' do
 end
 
 get '/:cgi' do
-  #params = /widget?username=(?<username>[^&]*)&period=(?<period>.*)/.match(:cgi)
-  #params = /widget?period=(?<period>[^&]*)&username=(?<username>.*)/.match(:cgi) if params.nil?
-  #return nil if params.nil?
   @username=params[:username]
   @period= params[:period]
   @albums = get_data(@username,@period)
@@ -28,8 +25,7 @@ end
 
 def get_data(username,period)
   user = Scrobbler2::User.new(username)
-    
-  #puts "=" * (username.length + 16)
+
   begin
   top_albums = user.top_albums(nil,{:period => period})["album"][1..6]
   rescue NoMethodError
