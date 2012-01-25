@@ -94,7 +94,7 @@ div    .box {    position:absolute;
     width:100%;    
 }
 #back{z-index:0;bottom:0px}
-#front{z-index:2;opacity:1;bottom:0px}
+#front{z-index:30;opacity:1;bottom:0px}
 
 .box img{position:absolute;
     bottom:0;

@@ -33,7 +33,7 @@ end
 
 def get_data(username,period)
   user = Scrobbler2::User.new(username)
-
+  
   albums = {
   :artist_names => [],
   :artist_urls  => [],
