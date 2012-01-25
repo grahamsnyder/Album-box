@@ -1,3 +1,12 @@
+GIT
+  remote: git://github.com/grahamsnyder/scrobbler2.git
+  revision: 3ba838538c6ad5b6beca3dbe65731a6a12cc24e2
+  branch: master
+  specs:
+    scrobbler2 (0.0.4.1)
+      activesupport
+      httparty (>= 0.2.2)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -13,9 +22,6 @@ GEM
     rack (1.4.1)
     rack-protection (1.2.0)
       rack
-    scrobbler2 (0.0.4)
-      activesupport
-      httparty (>= 0.2.2)
     sinatra (1.3.2)
       rack (~> 1.3, >= 1.3.6)
       rack-protection (~> 1.2)
@@ -27,5 +33,6 @@ PLATFORMS
 
 DEPENDENCIES
   activesupport (>= 3.1.1)
-  scrobbler2 (>= 0.0.4)
+  httparty (>= 0.2.2)
+  scrobbler2!
   sinatra (>= 1.3.2)
