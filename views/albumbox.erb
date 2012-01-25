@@ -1,7 +1,6 @@
 <link rel="stylesheet" type="text/css" href="style.css" />
 <h2><%= @username%>'s recent albums</h2>
-<p>Note: this widget currently only works on Webkit browsers (i.e. Safari and Chrome) and Firefox >= v10 (currently beta as of 25/1/12)
-</p>
+
 <div id="musicbox">
     <div  class="box" id="back">
         <img  class="boximg"  src="http://dl.dropbox.com/u/21799696/AlbumBox/boxback.png">
@@ -24,6 +23,8 @@
         <img  class="boximg"  src="http://dl.dropbox.com/u/21799696/AlbumBox/boxfrontlfm.png">
     </div>
 </div>
+<p>Note: this widget currently only works on Webkit browsers (i.e. Safari and Chrome) and Firefox >= v10 (currently beta as of 25/1/12)
+</p>
 <p><a href="/widget?username=<%=@username%>&period=<%=@period%>">permalink</a></p>
 
 <script type="text/javascript">
