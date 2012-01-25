@@ -1,2 +1,2 @@
-require 'albumboxgen'
+require './albumboxgen'
 run Sinatra::Application
