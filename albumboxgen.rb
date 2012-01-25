@@ -27,7 +27,7 @@ def get_data(username,period)
   user = Scrobbler2::User.new(username)
 
   begin
-  top_albums = user.top_albums(nil,{:period => period})["album"][1..6]
+  top_albums = user.top_albums(nil,{:period => period,:limit=>"6"})["album"]
   rescue NoMethodError
   return erb :failed
   end
