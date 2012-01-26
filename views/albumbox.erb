@@ -11,9 +11,9 @@
     </div>
     <div id="wrapper">
         <div class="albumholder">    
-	<% (1..6).to_a.reverse.each do |i|%>
+	<% (0..5).to_a.reverse.each do |i|%>
             <div class="album" id="album<%=i%>">
-                <img src= <%= @albums[:image_urls][i-1] %>>
+                <img src= <%= @albums[:image_urls][i] %>>
                 <div class="shadow" id="shadow<%=i%>"></div>
             </div>
 	<% end %>
@@ -34,79 +34,119 @@ yoffset = 20;
 zoffset = 30;
 fangle = -60;
 bangle = 2;
-currentAlbum = 0;
+currentAlbum = -1;
 
 artistNames = ["<%= @albums[:artist_names].join("\",\"") %>"]
 albumNames = ["<%= @albums[:album_names].join("\",\"") %>"]
 artistURLs = ["<%= @albums[:artist_urls].join("\",\"") %>"]
 albumURLs = ["<%= @albums[:album_urls].join("\",\"") %>"]
 
-function displayAlbum(album) {
-    for (a = album; a <= numAlbums; a++) {
-        if (a == currentAlbum) {
-            continue;
-        }
-        document.getElementById("album" + a).style.webkitTransform = "rotateX(" + bangle + "deg) translateY(-" + (a - 1) * yoffset + "px) translateZ(-" + (a - 1) * zoffset + "px)";
-        document.getElementById("album" + a).style.MozTransform = "rotateX(" + bangle + "deg) translateY(-" + (a - 1) * yoffset + "px) translateZ(-" + (a - 1) * zoffset + "px)";
-        document.getElementById("shadow" + a).style.opacity = "0";
-    }
-    for (a = 1; a < album; a++) {
-        if (a == currentAlbum) {
-            continue;
-        }
-        document.getElementById("album" + a).style.webkitTransform = "rotateX(" + fangle + "deg) translateY(" + (a - 1) * yoffset + "px) translateZ(-" + (a - 1) * zoffset + "px)";
-        document.getElementById("album" + a).style.MozTransform = "rotateX(" + fangle + "deg) translateY(" + (a - 1) * yoffset + "px) translateZ(-" + (a - 1) * zoffset + "px)";
-        document.getElementById("shadow" + a).style.opacity = "0.4";
-    }
-}
 
 function albumMouseover() {
-    var album = String(this.id).replace("shadow", "");
-    if (album != currentAlbum) {
-        displayAlbum(album);
-        document.getElementById("album" + album).style.webkitTransform = "rotateX(" + bangle + "deg) translateY(-" + ((a - 1) * yoffset + 5) + "px) translateZ(-" + (a - 1) * zoffset + "px)";
-        document.getElementById("album" + album).style.MozTransform = "rotateX(" + bangle + "deg) translateY(-" + ((a - 1) * yoffset + 5) + "px) translateZ(-" + (a - 1) * zoffset + "px)";
-    }
+	var a = String(this.id).replace("shadow", "");
+	if (a == currentAlbum) {return;}
+	albumPullUp(a);
 }
 
 function albumMouseout() {
     var album = String(this.id).replace("shadow", "");
-    if (album != currentAlbum) {
-        displayAlbum(album);
-    }
+    if (album != currentAlbum) { displayAlbum(album); }
 }
-
 
 function albumClick() {
     var album = String(this.id).replace("shadow", "");
     if (album == currentAlbum) {
-        currentAlbum = 0;
-        document.getElementById("titlebox").style.opacity = "0";
-        displayAlbum(album);
+	albumPutAway(album)
     }
     else {
-        currentAlbum = album;
-        document.getElementById("album" + album).style.webkitTransform = "rotateX(0deg) translateY(-240px) translateZ(0)";
-        document.getElementById("album" + album).style.MozTransform = "rotateX(0deg) translateY(-240px) translateZ(0)";
-        document.getElementById("artistname").innerHTML = artistNames[currentAlbum - 1];
-	document.getElementById("artistname").href = artistURLs[currentAlbum - 1];
-        document.getElementById("albumname").innerHTML = albumNames[currentAlbum - 1];
-	document.getElementById("albumname").href = albumURLs[currentAlbum - 1];
-	document.getElementById("titlebox").style.opacity = "1";
-        displayAlbum(album);
+	albumGetOut(album)
     }
 }
 
-
-for (a = 1; a <= numAlbums; a++) {
-    document.getElementById("album" + a).style.webkitTransformOriginX = "50%";
-    document.getElementById("album" + a).style.webkitTransformOriginY = "-" + (a - 1) * yoffset + "px)";
-    document.getElementById("album" + a).style.MozTransformOriginX = "50%";
-    document.getElementById("album" + a).style.MozTransformOriginY = "-" + (a - 1) * yoffset + "px)";
-    document.getElementById("shadow" + a).onmouseover = albumMouseover;
-    document.getElementById("shadow" + a).onclick = albumClick;
-    document.getElementById("shadow" + a).onmouseout = albumMouseout;
+function displayAlbum(album) {
+    for (a = album; a <= numAlbums-1; a++) {
+        if (a == currentAlbum) { continue; }
+	albumLeanBack(a)
+    }
+    for (a = 0; a < album; a++) {
+        if (a == currentAlbum) { continue; }
+	albumLeanForward(a)
+    }
 }
 
-displayAlbum(1);
+function albumGetOut(a) {
+        currentAlbum = a;
+	
+	thisAlbum = document.getElementById("album" + a);
+	title = document.getElementById("titlebox");
+	artist = document.getElementById("artistname");
+	album = document.getElementById("albumname");
+	
+        thisAlbum.style.webkitTransform = "rotateX(0deg) translateY(-240px) translateZ(0)";
+        thisAlbum.style.MozTransform 	= "rotateX(0deg) translateY(-240px) translateZ(0)";
+	
+        artist.innerHTML = artistNames[currentAlbum];
+	artist.href 	 = artistURLs[currentAlbum];
+        album.innerHTML  = albumNames[currentAlbum];
+	album.href 	 = albumURLs[currentAlbum];
+	
+	title.style.opacity = "1";
+	
+        displayAlbum(a);
+}
+
+function albumPutAway(a) {
+	currentAlbum = -1;
+	
+	title = document.getElementById("titlebox");
+	artist = document.getElementById("artistname");
+	album = document.getElementById("albumname");
+	
+        title.style.opacity = "0";
+	
+	artist.innerHTML = "";
+	artist.href = "";
+        album.innerHTML = "";
+	album.href = "";
+	
+        displayAlbum(a);
+}
+
+function albumPullUp(a) {
+	displayAlbum(a);
+	thisAlbum = document.getElementById("album" + a);
+	thisAlbum.style.webkitTransform = "rotateX(" + bangle + "deg) translateY(-" + (a * yoffset + 5) + "px) translateZ(-" + a * zoffset + "px)";
+	thisAlbum.style.MozTransform 	= "rotateX(" + bangle + "deg) translateY(-" + (a * yoffset + 5) + "px) translateZ(-" + a * zoffset + "px)";
+}
+
+function albumLeanBack(a) {
+	thisAlbum = document.getElementById("album" + a);
+        thisAlbum.style.webkitTransform = "rotateX(" + bangle + "deg) translateY(-" + a * yoffset + "px) translateZ(-" + a * zoffset + "px)";
+        thisAlbum.style.MozTransform 	= "rotateX(" + bangle + "deg) translateY(-" + a * yoffset + "px) translateZ(-" + a * zoffset + "px)";
+	document.getElementById("shadow" + a).style.opacity = "0";
+}
+
+function albumLeanForward(a) {
+	thisAlbum = document.getElementById("album" + a);
+        thisAlbum.style.webkitTransform = "rotateX(" + fangle + "deg) translateY(" + a * yoffset + "px) translateZ(-" + a * zoffset + "px)";
+        thisAlbum.style.MozTransform 	= "rotateX(" + fangle + "deg) translateY(" + a * yoffset + "px) translateZ(-" + a * zoffset + "px)";
+        document.getElementById("shadow" + a).style.opacity = "0.4";
+}
+
+
+for (a = 0; a <= numAlbums-1; a++) {
+	thisAlbum = document.getElementById("album" + a);
+	thisShadow = document.getElementById("shadow" + a)
+	
+	thisAlbum.style.webkitTransformOriginX = "50%";
+	thisAlbum.style.webkitTransformOriginY = "-" + a * yoffset + "px)";
+	thisAlbum.style.MozTransformOriginX = "50%";
+	thisAlbum.style.MozTransformOriginY = "-" + a * yoffset + "px)";
+    
+	thisShadow.onmouseover = albumMouseover;
+	thisShadow.onclick = albumClick;
+	thisShadow.onmouseout = albumMouseout;
+}
+
+displayAlbum(0);
 </script>
