@@ -4,6 +4,11 @@ require 'scrobbler2'
 GS_API_KEY = '0d01292c6827570c72a647903cc94e8b'
 Scrobbler2::Base.api_key = GS_API_KEY
 
+
+get '/robots.txt' do
+   "User-agent: *\nDisallow: /"
+end
+ 
 get '/' do
 	@title = 'Album Box'
 	erb :home
@@ -20,7 +25,7 @@ post '/' do
   erb :albumbox
 end
 
-get '/:cgi' do
+get '/widget/:cgi' do
   @username=params[:username]
   @period= params[:period]
   begin
@@ -30,6 +35,7 @@ get '/:cgi' do
   end
   erb :albumbox
 end
+
 
 def get_data(username,period)
   user = Scrobbler2::User.new(username)
