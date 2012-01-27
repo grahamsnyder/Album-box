@@ -28,6 +28,9 @@
 <p><a href="/widget/widget?username=<%=@username%>&period=<%=@period%>">permalink to this widget</a></p>
 <p>Created by <a href="http://www.last.fm/user/GrahamSnyder">Graham Snyder</a></p>
 
+
+
+
 <script type="text/javascript">
 numAlbums = 6;
 yoffset = 20;
@@ -84,6 +87,7 @@ function albumGetOut(a) {
 	
         thisAlbum.style.webkitTransform = "rotateX(0deg) translateY(-240px) translateZ(0)";
         thisAlbum.style.MozTransform 	= "rotateX(0deg) translateY(-240px) translateZ(0)";
+	thisAlbum.style.boxShadow	= "0 0 15px #ffffff";
 	
         artist.innerHTML = artistNames[currentAlbum];
 	artist.href 	 = artistURLs[currentAlbum];
@@ -101,7 +105,7 @@ function albumPutAway(a) {
 	title = document.getElementById("titlebox");
 	artist = document.getElementById("artistname");
 	album = document.getElementById("albumname");
-	
+		
         title.style.opacity = "0";
 	
 	artist.innerHTML = "";
@@ -124,6 +128,7 @@ function albumLeanBack(a) {
         thisAlbum.style.webkitTransform = "rotateX(" + bangle + "deg) translateY(-" + a * yoffset + "px) translateZ(-" + a * zoffset + "px)";
         thisAlbum.style.MozTransform 	= "rotateX(" + bangle + "deg) translateY(-" + a * yoffset + "px) translateZ(-" + a * zoffset + "px)";
 	document.getElementById("shadow" + a).style.opacity = "0";
+	thisAlbum.style.boxShadow	= "0 0 0 #ffffff";
 }
 
 function albumLeanForward(a) {
@@ -131,6 +136,7 @@ function albumLeanForward(a) {
         thisAlbum.style.webkitTransform = "rotateX(" + fangle + "deg) translateY(" + a * yoffset + "px) translateZ(-" + a * zoffset + "px)";
         thisAlbum.style.MozTransform 	= "rotateX(" + fangle + "deg) translateY(" + a * yoffset + "px) translateZ(-" + a * zoffset + "px)";
         document.getElementById("shadow" + a).style.opacity = "0.4";
+	thisAlbum.style.boxShadow	= "0 0 0 #ffffff";
 }
 
 
