@@ -1,12 +1,17 @@
 require 'sinatra'
 require 'active_support/all'
 require 'scrobbler2'
+require 'slim'
 GS_API_KEY = '0d01292c6827570c72a647903cc94e8b'
 Scrobbler2::Base.api_key = GS_API_KEY
 
 
 get '/robots.txt' do
-   "User-agent: *\nDisallow: /"
+  "User-agent: *\nDisallow: /"
+end
+ 
+get '/albumbox.js' do
+  erb :albumbox_js
 end
  
 get '/' do
@@ -17,25 +22,31 @@ end
 post '/' do
   @username=params[:username]
   @period= params[:period]
-  begin
-  @albums = get_data(@username,@period)
-  rescue NoMethodError
-  return erb :failed
-  end
-  erb :albumbox
+  redirect "/widget/#{params[:username]}/#{params[:period]}"
 end
 
-get '/widget/:cgi' do
+#~ get '/widget/:cgi' do
+  #~ @username=params[:username]
+  #~ @period= params[:period]
+  #~ begin
+  #~ @albums = get_data(@username,@period)
+  #~ rescue NoMethodError
+  #~ return erb :failed
+  #~ end
+  #~ erb :albumbox
+#~ end
+
+get '/widget/:username/:period' do
   @username=params[:username]
   @period= params[:period]
   begin
   @albums = get_data(@username,@period)
+    @albums = get_data(@username,@period)
   rescue NoMethodError
   return erb :failed
   end
   erb :albumbox
 end
-
 
 def get_data(username,period)
   user = Scrobbler2::User.new(username)
